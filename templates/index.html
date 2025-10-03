@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4 text-center">🏥 Patient Management System</h1>
+        
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary stats-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Patients</h5>
+                        <h2 class="card-text">{{ total_patients }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success stats-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Appointments</h5>
+                        <h2 class="card-text">{{ total_appointments }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-info stats-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">System Status</h5>
+                        <h2 class="card-text">🟢 Online</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Quick Actions</h4>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('add_patient') }}" class="btn btn-primary me-2 mb-2">➕ Add New Patient</a>
+                <a href="{{ url_for('view_patients') }}" class="btn btn-success me-2 mb-2">👥 View All Patients</a>
+                <a href="{{ url_for('appointments') }}" class="btn btn-info me-2 mb-2">📅 Manage Appointments</a>
+                <a href="{{ url_for('search_patient') }}" class="btn btn-warning mb-2">🔍 Search Patient</a>
+            </div>
+        </div>
+
+        <!-- Recent Patients -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Recent Patients</h4>
+            </div>
+            <div class="card-body">
+                {% if recent_patients %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Contact</th>
+                                <th>Registered Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for patient in recent_patients %}
+                            <tr>
+                                <td><strong>{{ patient[1] }}</strong></td>
+                                <td>{{ patient[2] }}</td>
+                                <td>{{ patient[3] }}</td>
+                                <td>{{ patient[4] }}</td>
+                                <td>{{ patient[5] or "N/A" }}</td>
+                                <td>{{ patient[8] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info text-center">
+                    <h5>No Patients Found</h5>
+                    <p>Get started by adding your first patient!</p>
+                    <a href="{{ url_for('add_patient') }}" class="btn btn-primary">Add First Patient</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

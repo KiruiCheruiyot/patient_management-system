@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Appointments{% endblock %}
+
+{% block content %}
+<!-- Schedule Appointment Form -->
+<div class="card mb-4">
+    <div class="card-header bg-info text-white">
+        <h4 class="mb-0">📅 Schedule New Appointment</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="patient_id" class="form-label">Patient ID <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="patient_id" name="patient_id" required
+                               placeholder="Enter Patient ID (e.g., PAT20231201093045)">
+                        <div class="form-text">Make sure the patient exists in the system.</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="appointment_date" class="form-label">Appointment Date & Time <span class="text-danger">*</span></label>
+                        <input type="datetime-local" class="form-control" id="appointment_date" name="appointment_date" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="doctor_name" class="form-label">Doctor Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="doctor_name" name="doctor_name" required placeholder="Enter doctor's name">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                        <select class="form-select" id="department" name="department" required>
+                            <option value="">Select Department</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="General Medicine">General Medicine</option>
+                            <option value="Emergency">Emergency</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="notes" class="form-label">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any additional notes about the appointment..."></textarea>
+            </div>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-primary me-md-2">Schedule Appointment</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Appointments List -->
+{% if appointments %}
+<div class="card">
+    <div class="card-header bg-secondary text-white">
+        <h4 class="mb-0">📋 All Appointments</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Appointment ID</th>
+                        <th>Patient Name</th>
+                        <th>Patient ID</th>
+                        <th>Appointment Date</th>
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment[0] }}</td>
+                        <td><strong>{{ appointment[6] }}</strong></td>
+                        <td>{{ appointment[1] }}</td>
+                        <td>{{ appointment[2] }}</td>
+                        <td>{{ appointment[3] }}</td>
+                        <td>{{ appointment[4] }}</td>
+                        <td>
+                            {% if appointment[5] == 'Scheduled' %}
+                                <span class="badge bg-warning">{{ appointment[5] }}</span>
+                            {% elif appointment[5] == 'Completed' %}
+                                <span class="badge bg-success">{{ appointment[5] }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ appointment[5] }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ appointment[7] or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info text-center">
+    <h4>No Appointments Scheduled</h4>
+    <p>There are no appointments scheduled yet.</p>
+    <p>Use the form above to schedule your first appointment.</p>
+</div>
+{% endif %}
+{% endblock %}
