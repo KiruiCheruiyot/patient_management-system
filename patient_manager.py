@@ -96,3 +96,4 @@ class PatientManager:
             ORDER BY a.appointment_date DESC
         """
         return self.db.fetch_all(query)
+    

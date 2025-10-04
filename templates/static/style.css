@@ -8,9 +8,9 @@ body {
 }
 
 .card {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    box-shadow: 0 0.125rem 0.25rem rgba(204, 24, 189, 0.53);
     margin-bottom: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.125);
+    border: 1px solid rgba(133, 15, 15, 0.13);
 }
 
 .stats-card {
