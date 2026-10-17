@@ -4,7 +4,7 @@ from datetime import datetime
 class PatientManager:
     def __init__(self):
         self.db = Database()
-    
+
     def generate_patient_id(self):
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         return f"PAT{timestamp}"
