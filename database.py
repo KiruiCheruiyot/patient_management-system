@@ -8,7 +8,7 @@ class Database:
     
     def get_connection(self):
         return sqlite3.connect(self.db_name, check_same_thread=False)
-    
+
     def init_database(self):
         conn = self.get_connection()
         cursor = conn.cursor()
