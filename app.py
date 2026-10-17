@@ -5,7 +5,6 @@ app = Flask(__name__)
 app.secret_key = 'patient_management_secret_key_2024'
 
 patient_manager = PatientManager()
-
 @app.route('/')
 def index():
     patients = patient_manager.get_all_patients()
